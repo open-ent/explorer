@@ -24,6 +24,7 @@ public class ResourceQueryElastic {
     private Optional<Long> from = Optional.empty();
     private Optional<Long> size = Optional.empty();
     private boolean onlyRoot = false;
+    private boolean searchEverywhere = false;
     private Optional<Boolean> trashed = Optional.empty();
     private Optional<Boolean> favorite = Optional.empty();
     private Optional<Boolean> shared = Optional.empty();
@@ -212,6 +213,9 @@ public class ResourceQueryElastic {
         if(!operation.getAssetIds().isEmpty()){
             this.withAssetId(operation.getAssetIds());
         }
+        if (operation.isSearchEverywhere()) {
+            this.searchEverywhere = true;
+        }
         if (operation.getParentId().isPresent() && !ExplorerConfig.ROOT_FOLDER_ID.equalsIgnoreCase(operation.getParentId().get())) {
             this.withFolderId(operation.getParentId().get());
         } else if (!operation.isSearchEverywhere()) {
@@ -284,8 +288,8 @@ public class ResourceQueryElastic {
         if (creatorIdTerm.isPresent()) {
             must.add(creatorIdTerm.get());
         }
-        //by rights
-        if(user.isPresent()){
+        //by rights — skipped when searchEverywhere (e.g. folder trash on resources owned by others)
+        if(user.isPresent() && !this.searchEverywhere){
             final UserInfos user = this.user.get();
             final List<String> rights = new ArrayList<>();
             //by creator
