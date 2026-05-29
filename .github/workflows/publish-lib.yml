@@ -1,0 +1,70 @@
+name: Publish @open-ent/explorer (lib · GitHub Packages)
+
+# Publie la LIB explorer (`./lib`, consommée par d'autres modules React comme
+# collaborativewall) sous le scope @open-ent sur GitHub Packages.
+# Séparé du fat mod (build-and-publish.yml). La source reste `ode-explorer` /
+# `@edifice.io/*` ; le renommage @edifice.io -> @open-ent se fait ici, au publish
+# (cf. frontend/scripts/prepare-openent-explorer-publish.mjs).
+#
+# Déclenchement : manuel (version requise) ou tag `lib-v*`.
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version à publier (ex. 2.5.22)'
+        required: true
+  push:
+    tags: ['lib-v*']
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9 # racine du repo sans packageManager -> version explicite
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://npm.pkg.github.com
+          scope: '@open-ent'
+
+      - name: Résoudre la version
+        id: ver
+        run: |
+          if [ -n "${{ github.event.inputs.version }}" ]; then
+            echo "version=${{ github.event.inputs.version }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "version=${GITHUB_REF_NAME#lib-v}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Neutraliser les overrides link: (chemins locaux absents en CI)
+        run: node -e "const fs=require('fs');const p=JSON.parse(fs.readFileSync('package.json','utf8'));delete p.pnpm;fs.writeFileSync('package.json',JSON.stringify(p,null,2))"
+
+      - name: Install (deps @edifice depuis npm — externalisées par la lib)
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          TIPTAP_PRO_TOKEN: ${{ secrets.TIPTAP_PRO_TOKEN }}
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build lib (ESM + types)
+        run: pnpm exec vite build --mode lib
+
+      - name: Renommer ode-explorer -> @open-ent/explorer (+ @edifice.io -> @open-ent)
+        run: node scripts/prepare-openent-explorer-publish.mjs "${{ steps.ver.outputs.version }}"
+
+      - name: Publier la lib sur GitHub Packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm publish --no-git-checks --access restricted
