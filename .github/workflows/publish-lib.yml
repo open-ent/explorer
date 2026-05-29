@@ -49,7 +49,7 @@ jobs:
             echo "version=${GITHUB_REF_NAME#lib-v}" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Neutraliser les overrides link: (chemins locaux absents en CI)
+      - name: Neutraliser les overrides link locaux (absents en CI)
         run: node -e "const fs=require('fs');const p=JSON.parse(fs.readFileSync('package.json','utf8'));delete p.pnpm;fs.writeFileSync('package.json',JSON.stringify(p,null,2))"
 
       - name: Install (deps @edifice depuis npm — externalisées par la lib)
