@@ -9,7 +9,7 @@ on:
       - dev
       - '*-patched'
       - '*-patched-dev'
-    tags: ['*']
+    tags: ['*', '!lib-v*'] # lib-v* réservé à publish-lib.yml (lib npm), pas au fat mod
   pull_request:
     branches: [main, master, develop, dev]
   workflow_dispatch:
