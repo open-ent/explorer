@@ -22,6 +22,10 @@ const REGISTRY = 'https://npm.pkg.github.com';
 const version = process.argv[2];
 const DEP_KEYS = ['dependencies', 'peerDependencies', 'optionalDependencies'];
 const ren = (s) => s.split(FROM).join(TO);
+// Les deps @edifice (souvent en dist-tag `develop-pedago`) deviennent @open-ent :
+// il faut pointer sur une VERSION publiée du fork (le dist-tag develop-pedago
+// n'existe pas côté @open-ent). Aligné sur la version des packages framework.
+const OPENENT_DEPS_RANGE = '^2.5.22';
 
 // package.json
 const pkgPath = join(ROOT, 'package.json');
@@ -31,7 +35,11 @@ if (version) pkg.version = version;
 for (const key of DEP_KEYS) {
   if (!pkg[key]) continue;
   const out = {};
-  for (const [name, spec] of Object.entries(pkg[key])) out[ren(name)] = spec;
+  for (const [name, spec] of Object.entries(pkg[key])) {
+    const nn = ren(name);
+    // deps internes @open-ent -> version publiée (pas le dist-tag @edifice d'origine)
+    out[nn] = nn.startsWith(TO) ? OPENENT_DEPS_RANGE : spec;
+  }
   pkg[key] = out;
 }
 // pnpm.overrides locaux (link:) sont inutiles dans le package publié
