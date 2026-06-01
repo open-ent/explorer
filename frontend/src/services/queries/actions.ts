@@ -1,4 +1,4 @@
-import { IAction } from '@edifice.io/client';
+import { IAction } from '@open-ent/client';
 import { queryOptions, useQuery } from '@tanstack/react-query';
 import { AppParams } from '~/config';
 import { useStoreContext } from '~/store';

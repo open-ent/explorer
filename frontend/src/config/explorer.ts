@@ -6,7 +6,7 @@ import {
   type IFilter,
   type IOrder,
   type ResourceType,
-} from '@edifice.io/client';
+} from '@open-ent/client';
 import { BlogResourceService } from '~/services/resource/service';
 
 export interface AppParams {

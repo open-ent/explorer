@@ -1,9 +1,9 @@
 import { useEffect, useId, useState } from 'react';
 
 import { useDraggable, useDroppable } from '@dnd-kit/core';
-import { ID, IWebApp } from '@edifice.io/client';
-import { Card, CardProps, IconButton, useBreakpoint } from '@edifice.io/react';
-import { IconFiles, IconMove } from '@edifice.io/react/icons';
+import { ID, IWebApp } from '@open-ent/client';
+import { Card, CardProps, IconButton, useBreakpoint } from '@open-ent/react';
+import { IconFiles, IconMove } from '@open-ent/react/icons';
 
 import { useElementDragOver, useResourceOrFolderIsDraggable } from '~/store';
 import { DraggableCard } from './DraggableCard';

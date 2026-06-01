@@ -1,5 +1,5 @@
-import { IFolder } from '@edifice.io/client';
-import { findNodeById, getAncestors } from '@edifice.io/react';
+import { IFolder } from '@open-ent/client';
+import { findNodeById, getAncestors } from '@open-ent/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 

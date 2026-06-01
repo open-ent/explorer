@@ -1,4 +1,4 @@
-import { IconDelete } from '@edifice.io/react/icons';
+import { IconDelete } from '@open-ent/react/icons';
 import { useTranslation } from 'react-i18next';
 
 export interface TrashButtonProps {

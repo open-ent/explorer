@@ -1,4 +1,4 @@
-import { EmptyScreen, useEdificeClient } from '@edifice.io/react';
+import { EmptyScreen, useEdificeClient } from '@open-ent/react';
 import illuTrash from '@images/emptyscreen/illu-trash.svg';
 import { useTranslation } from 'react-i18next';
 

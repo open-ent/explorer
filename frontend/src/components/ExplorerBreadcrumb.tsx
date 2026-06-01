@@ -1,5 +1,5 @@
-import { IconButton, useEdificeClient } from '@edifice.io/react';
-import { IconArrowLeft } from '@edifice.io/react/icons';
+import { IconButton, useEdificeClient } from '@open-ent/react';
+import { IconArrowLeft } from '@open-ent/react/icons';
 import { useTranslation } from 'react-i18next';
 
 import { useSearchForm } from '~/features/SearchForm/useSearchForm';

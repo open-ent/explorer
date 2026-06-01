@@ -1,6 +1,6 @@
 import { forwardRef, type Ref } from 'react';
 
-import { Button } from '@edifice.io/react';
+import { Button } from '@open-ent/react';
 import { useTranslation } from 'react-i18next';
 
 const LoadMore = forwardRef((_props, ref: Ref<HTMLButtonElement>) => {

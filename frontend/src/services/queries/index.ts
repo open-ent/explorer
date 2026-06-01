@@ -10,7 +10,7 @@ import {
   type IResource,
   type ISearchResults,
   type ShareRight,
-} from '@edifice.io/client';
+} from '@open-ent/client';
 import {
   addNode,
   deleteNode,
@@ -21,7 +21,7 @@ import {
   useToast,
   useUpdateMutation,
   useUser,
-} from '@edifice.io/react';
+} from '@open-ent/react';
 import {
   UseMutationOptions,
   UseMutationResult,

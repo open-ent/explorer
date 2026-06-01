@@ -1,4 +1,4 @@
-import { Button, Modal, TreeView, useEdificeClient } from '@edifice.io/react';
+import { Button, Modal, TreeView, useEdificeClient } from '@open-ent/react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 

@@ -144,10 +144,23 @@ export default ({ mode }: { mode: string }) => {
     plugins,
     server,
     resolve: {
+      // Le fork @open-ent/react est lié (link:) et résout ses peers depuis son
+      // propre node_modules -> sans dedupe on embarque deux copies (react-query,
+      // i18next...) => "No QueryClient set". On force une instance unique.
+      dedupe: [
+        'react',
+        'react-dom',
+        '@tanstack/react-query',
+        'react-i18next',
+        'i18next',
+        '@react-spring/web',
+        'react-hook-form',
+        'react-router-dom',
+      ],
       alias: {
         '@images': resolve(
           __dirname,
-          'node_modules/@edifice.io/bootstrap/dist/images',
+          'node_modules/@open-ent/bootstrap/dist/images',
         ),
       },
     },

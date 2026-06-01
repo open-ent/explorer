@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
-import { IResource, IWebApp } from '@edifice.io/client';
+import { IResource, IWebApp } from '@open-ent/client';
 import {
   AppIcon,
   Avatar,
@@ -12,9 +12,9 @@ import {
   Tooltip,
   useBreakpoint,
   useEdificeClient,
-} from '@edifice.io/react';
-import { IconGlobe, IconMove, IconUsers } from '@edifice.io/react/icons';
-import { IconOneProfile } from '@edifice.io/react/icons/nav';
+} from '@open-ent/react';
+import { IconGlobe, IconMove, IconUsers } from '@open-ent/react/icons';
+import { IconOneProfile } from '@open-ent/react/icons/nav';
 import { useTranslation } from 'react-i18next';
 
 import { useIsTrash, useResourceOrFolderIsDraggable } from '~/store';

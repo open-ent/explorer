@@ -1,9 +1,9 @@
-import { type IAction } from '@edifice.io/client';
+import { type IAction } from '@open-ent/client';
 import {
   EmptyScreen,
   useEdificeClient,
   useEdificeTheme,
-} from '@edifice.io/react';
+} from '@open-ent/react';
 import { useTranslation } from 'react-i18next';
 
 import { useEffect, useState } from 'react';

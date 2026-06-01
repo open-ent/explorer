@@ -1,5 +1,5 @@
-import { odeServices } from '@edifice.io/client';
-import { useEdificeTheme, useLibraryUrl } from '@edifice.io/react';
+import { odeServices } from '@open-ent/client';
+import { useEdificeTheme, useLibraryUrl } from '@open-ent/react';
 import { useEffect, useState } from 'react';
 
 export const useLibrary = () => {
