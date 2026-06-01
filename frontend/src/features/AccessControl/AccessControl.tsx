@@ -1,7 +1,7 @@
 import { type ReactElement, type ReactNode } from 'react';
 
-import { IAction, RightRole } from '@edifice.io/client';
-import { Button } from '@edifice.io/react';
+import { IAction, RightRole } from '@open-ent/client';
+import { Button } from '@open-ent/react';
 import { useTranslation } from 'react-i18next';
 
 import {

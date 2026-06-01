@@ -6,13 +6,13 @@ import {
   type IFolder,
   type IResource,
   type ISearchParameters,
-} from '@edifice.io/client';
+} from '@open-ent/client';
 import {
   findNodeById,
   findParentNode,
   wrapTreeNode,
   type TreeData,
-} from '@edifice.io/react';
+} from '@open-ent/react';
 import { type QueryClient } from '@tanstack/react-query';
 import { t } from 'i18next';
 import { createStore, useStore } from 'zustand';

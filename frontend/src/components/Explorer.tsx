@@ -2,7 +2,7 @@ import { Suspense, lazy, useEffect } from 'react';
 
 import { DndContext } from '@dnd-kit/core';
 import { snapCenterToCursor } from '@dnd-kit/modifiers';
-import { IWebApp, isActionAvailable } from '@edifice.io/client';
+import { IWebApp, isActionAvailable } from '@open-ent/client';
 import {
   AppHeader,
   Breadcrumb,
@@ -10,7 +10,7 @@ import {
   LoadingScreen,
   useEdificeClient,
   useXitiTrackPageLoad,
-} from '@edifice.io/react';
+} from '@open-ent/react';
 
 import { AppParams } from '~/config';
 import { useDisableModal } from '~/features/ActionBar/Disable/useDisableModal';

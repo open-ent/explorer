@@ -1,14 +1,14 @@
 import { lazy, Suspense } from 'react';
 
-import { IAction, IResource, isActionAvailable } from '@edifice.io/client';
+import { IAction, IResource, isActionAvailable } from '@open-ent/client';
 import {
   BlogPublic,
   Button,
   LoadingScreen,
   useEdificeClient,
   useToggle,
-} from '@edifice.io/react';
-import { IconPlus } from '@edifice.io/react/icons';
+} from '@open-ent/react';
+import { IconPlus } from '@open-ent/react/icons';
 import { useTranslation } from 'react-i18next';
 
 import { goToCreate } from '~/services/api';

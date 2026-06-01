@@ -1,3 +1,3 @@
-import { PublishModal } from '@edifice.io/react';
+import { PublishModal } from '@open-ent/react';
 
 export default PublishModal;

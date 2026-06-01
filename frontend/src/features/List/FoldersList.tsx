@@ -1,5 +1,5 @@
-import { ISearchResults, type ID, type IFolder } from '@edifice.io/client';
-import { useEdificeClient, useScrollToTop } from '@edifice.io/react';
+import { ISearchResults, type ID, type IFolder } from '@open-ent/client';
+import { useEdificeClient, useScrollToTop } from '@open-ent/react';
 import { animated, useSpring } from '@react-spring/web';
 import { InfiniteData, useQueryClient } from '@tanstack/react-query';
 

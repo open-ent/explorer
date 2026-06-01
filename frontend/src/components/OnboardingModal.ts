@@ -1,3 +1,3 @@
-import { OnboardingModal } from '@edifice.io/react';
+import { OnboardingModal } from '@open-ent/react';
 
 export default OnboardingModal;

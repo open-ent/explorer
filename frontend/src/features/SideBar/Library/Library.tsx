@@ -1,4 +1,4 @@
-import { IconArrowRight } from '@edifice.io/react/icons';
+import { IconArrowRight } from '@open-ent/react/icons';
 import { useTranslation } from 'react-i18next';
 import { useLibrary } from './useLibrary';
 

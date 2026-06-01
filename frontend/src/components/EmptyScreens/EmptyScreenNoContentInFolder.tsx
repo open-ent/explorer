@@ -1,4 +1,4 @@
-import { EmptyScreen, useEdificeClient } from '@edifice.io/react';
+import { EmptyScreen, useEdificeClient } from '@open-ent/react';
 import illuNoContentInFolder from '@images/emptyscreen/illu-no-content-in-folder.svg';
 import { useTranslation } from 'react-i18next';
 

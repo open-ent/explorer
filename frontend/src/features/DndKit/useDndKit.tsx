@@ -8,7 +8,7 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
-import { getAncestors, useEdificeClient, useToast } from '@edifice.io/react';
+import { getAncestors, useEdificeClient, useToast } from '@open-ent/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { DELAY, TOLERANCE } from '~/config';

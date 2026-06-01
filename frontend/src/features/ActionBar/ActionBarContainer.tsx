@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react';
 
-import { type IAction, isActionAvailable } from '@edifice.io/client';
+import { type IAction, isActionAvailable } from '@open-ent/client';
 import {
   ActionBar,
   BlogPublic,
@@ -9,7 +9,7 @@ import {
   ShareBlog,
   ShareModal,
   useEdificeClient,
-} from '@edifice.io/react';
+} from '@open-ent/react';
 import { animated, useTransition } from '@react-spring/web';
 import { useTranslation } from 'react-i18next';
 

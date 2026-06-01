@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect } from 'react';
 
-import { LoadingScreen, useEdificeClient, useToast } from '@edifice.io/react';
+import { LoadingScreen, useEdificeClient, useToast } from '@open-ent/react';
 import { useTranslation } from 'react-i18next';
 
 import { useQueryClient } from '@tanstack/react-query';

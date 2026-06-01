@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 
-import { ISearchResults, type ID, type IResource } from '@edifice.io/client';
-import { Button, useDate, useEdificeClient } from '@edifice.io/react';
+import { ISearchResults, type ID, type IResource } from '@open-ent/client';
+import { Button, useDate, useEdificeClient } from '@open-ent/react';
 import { animated, useSpring } from '@react-spring/web';
 import { InfiniteData } from '@tanstack/react-query';
 import clsx from 'clsx';

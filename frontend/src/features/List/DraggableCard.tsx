@@ -1,6 +1,6 @@
-import { IWebApp } from '@edifice.io/client';
-import { AppIcon } from '@edifice.io/react';
-import { IconFiles } from '@edifice.io/react/icons';
+import { IWebApp } from '@open-ent/client';
+import { AppIcon } from '@open-ent/react';
+import { IconFiles } from '@open-ent/react/icons';
 
 function CardIcon({
   app,

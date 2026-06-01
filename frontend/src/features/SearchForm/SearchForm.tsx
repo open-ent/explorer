@@ -6,8 +6,8 @@ import {
   Input,
   SearchButton,
   useEdificeClient,
-} from '@edifice.io/react';
-import { IconFilter } from '@edifice.io/react/icons';
+} from '@open-ent/react';
+import { IconFilter } from '@open-ent/react/icons';
 import { useTranslation } from 'react-i18next';
 
 import { useSearchForm } from './useSearchForm';

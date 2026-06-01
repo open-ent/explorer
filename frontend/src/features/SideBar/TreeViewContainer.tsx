@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react';
 
-import { FOLDER, type ID } from '@edifice.io/client';
+import { FOLDER, type ID } from '@open-ent/client';
 import {
   Button,
   findNodeById,
@@ -9,8 +9,8 @@ import {
   useEdificeClient,
   useScrollToTop,
   useToggle,
-} from '@edifice.io/react';
-import { IconPlus } from '@edifice.io/react/icons';
+} from '@open-ent/react';
+import { IconPlus } from '@open-ent/react/icons';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 

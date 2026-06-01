@@ -1,4 +1,4 @@
-import { type IResource } from '@edifice.io/client';
+import { type IResource } from '@open-ent/client';
 
 export function isResourceShared(resource: IResource) {
   const { rights, creatorId } = resource;

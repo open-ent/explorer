@@ -14,7 +14,7 @@ import {
   type TrashParameters,
   type UpdateFolderParameters,
   type UpdateParameters,
-} from '@edifice.io/client';
+} from '@open-ent/client';
 
 /**
  * searchContext API
