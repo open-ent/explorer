@@ -1,3 +1,6 @@
 .DS_Store
 .idea
 edifice
+
+# pnpm store local
+.pnpm-store/
