@@ -54,6 +54,7 @@ jobs:
 
       - name: Install (deps @edifice depuis npm — externalisées par la lib)
         env:
+          NODE_AUTH_TOKEN: ${{ secrets.OPENENT_PACKAGES_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           TIPTAP_PRO_TOKEN: ${{ secrets.TIPTAP_PRO_TOKEN }}
         run: pnpm install --no-frozen-lockfile
