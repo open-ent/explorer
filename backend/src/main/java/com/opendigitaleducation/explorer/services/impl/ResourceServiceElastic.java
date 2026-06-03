@@ -130,7 +130,8 @@ public class ResourceServiceElastic implements ResourceService {
         final ResourceQueryElastic query = new ResourceQueryElastic(user).withApplication(application).withSearchOperation(operation);
         final ElasticClient.ElasticOptions options = new ElasticClient.ElasticOptions().withRouting(getRoutingKey(application));
         final JsonObject queryJson = query.getSearchQuery();
-        return manager.getClient().search(index, queryJson, options);
+        return manager.getClient().search(index, queryJson, options)
+            .recover(e -> isIndexNotFound(e) ? Future.succeededFuture(new JsonArray()) : Future.failedFuture(e));
     }
 
     @Override
@@ -141,7 +142,9 @@ public class ResourceServiceElastic implements ResourceService {
         final JsonObject queryJson = query.getSearchQuery();
         return manager.getClient().searchWithMeta(index, queryJson, options).map(e -> {
             return new FetchResult(e.getCount(), e.getRows());
-        });
+        }).recover(e -> isIndexNotFound(e)
+            ? Future.succeededFuture(new FetchResult(0L, new java.util.ArrayList<>()))
+            : Future.failedFuture(e));
     }
 
     @Override
@@ -150,7 +153,20 @@ public class ResourceServiceElastic implements ResourceService {
         final ResourceQueryElastic query = new ResourceQueryElastic(user).withApplication(application).withSearchOperation(operation);
         final ElasticClient.ElasticOptions options = new ElasticClient.ElasticOptions().withRouting(getRoutingKey(application));
         final JsonObject queryJson = query.getCountQuery();
-        return manager.getClient().count(index, queryJson, options);
+        return manager.getClient().count(index, queryJson, options)
+            .recover(e -> isIndexNotFound(e) ? Future.succeededFuture(0) : Future.failedFuture(e));
+    }
+
+    /**
+     * Une application sans aucune ressource indexée n'a pas d'index OpenSearch
+     * `resource-<app>` (ex. timelinegenerator à 0 frise). La recherche renvoie
+     * alors index_not_found_exception (HTTP 404 OpenSearch) qui remontait en 500.
+     * On traite ce cas comme un résultat vide ; l'index sera créé automatiquement
+     * dès la 1re ressource indexée.
+     */
+    private static boolean isIndexNotFound(final Throwable t) {
+        final String msg = t == null ? null : t.getMessage();
+        return msg != null && (msg.contains("index_not_found_exception") || msg.contains("no such index"));
     }
 
     @Override
