@@ -140,6 +140,12 @@ export default ({ mode }: { mode: string }) => {
   };
 
   return defineConfig({
+    // Le module est servi sous /explorer/public/ par entcore (cf. la vue
+    // backend view/index.html qui référence /explorer/public/index.js). Sans
+    // cette base, `vite build` génère des chemins racine (/index.js) -> 404 du
+    // bundle une fois déployé. La base ne s'applique qu'au build app (prod) ;
+    // le mode lib (micro-frontend) et le dev server gardent la racine.
+    base: isProduction ? '/explorer/public/' : '/',
     build: isProduction ? build : buildLib,
     plugins,
     server,
