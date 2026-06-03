@@ -74,7 +74,9 @@ public class FolderServiceElastic implements FolderService {
                             final ResourceQueryElastic query = new ResourceQueryElastic(user).withApplication(request.getApplication()).withSearchOperation(new ResourceSearchOperation().setFolderIds(folders.keySet()).setSearchEverywhere(true)).withSize(10000l);
                             final ElasticClient.ElasticOptions options = new ElasticClient.ElasticOptions().withRouting(request.getApplication());
                             final JsonObject queryJson = query.withLimitedFieldNames(Arrays.asList("_id", "folderIds", "assetId")).getSearchQuery();
-                            return manager.getClient().search(index, queryJson, options).map(resources -> {
+                            return manager.getClient().search(index, queryJson, options)
+                                .recover(e -> isIndexNotFound(e) ? Future.succeededFuture(new JsonArray()) : Future.failedFuture(e))
+                                .map(resources -> {
                                 // for each resource get folders related
                                 for (final Object resource : resources) {
                                     final JsonObject json = (JsonObject) resource;
@@ -185,6 +187,16 @@ public class FolderServiceElastic implements FolderService {
 
     protected String getIndex(){
         return ExplorerConfig.getInstance().getIndex(ExplorerConfig.FOLDER_APPLICATION);
+    }
+
+    /**
+     * Une application sans aucune ressource indexée n'a pas d'index OpenSearch
+     * `resource-<app>` : la recherche des sous-ressources des dossiers renvoie
+     * alors index_not_found_exception. On traite ce cas comme un résultat vide.
+     */
+    private static boolean isIndexNotFound(final Throwable t) {
+        final String msg = t == null ? null : t.getMessage();
+        return msg != null && (msg.contains("index_not_found_exception") || msg.contains("no such index"));
     }
 
     @Override
