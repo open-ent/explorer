@@ -52,10 +52,14 @@ jobs:
       - name: Install frontend dependencies
         working-directory: frontend
         run: pnpm install
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.OPENENT_PACKAGES_TOKEN }}
 
       - name: Build frontend
         working-directory: frontend
         run: pnpm build
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.OPENENT_PACKAGES_TOKEN }}
 
       - name: Upload frontend dist
         uses: actions/upload-artifact@v4
