@@ -54,12 +54,16 @@ jobs:
         run: pnpm install --no-frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.OPENENT_PACKAGES_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          TIPTAP_PRO_TOKEN: ${{ secrets.TIPTAP_PRO_TOKEN }}
 
       - name: Build frontend
         working-directory: frontend
         run: pnpm build
         env:
           NODE_AUTH_TOKEN: ${{ secrets.OPENENT_PACKAGES_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          TIPTAP_PRO_TOKEN: ${{ secrets.TIPTAP_PRO_TOKEN }}
 
       - name: Upload frontend dist
         uses: actions/upload-artifact@v4
