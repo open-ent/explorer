@@ -52,7 +52,7 @@
     "@dnd-kit/core": "^6.1.0",
     "@dnd-kit/modifiers": "7.0.0",
     "@open-ent/react": "^2.5.29",
-    "@open-ent/bootstrap": "^2.5.29",
+    "@open-ent/bootstrap": "2.5.30-patched",
     "@open-ent/client": "^2.5.29",
     "@react-spring/web": "9.7.3",
     "@tanstack/react-query": "5.62.7",
