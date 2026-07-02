@@ -63,7 +63,15 @@
             <groupId>com.ongres.scram</groupId>
             <artifactId>client</artifactId>
             <version>${scramVersion}</version>
-            <scope>compile</scope>
+            <!-- provided : fourni par le launcher (scram-client 3.2) — evite le conflit SCRAM sous scram-sha-256 -->
+            <scope>provided</scope>
+        </dependency>
+        <!-- provided : vertx-sql-client fourni par le launcher ; utilise directement (io.vertx.sqlclient) mais plus transitif via common -->
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-sql-client</artifactId>
+            <version>${vertxVersion}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jsoup</groupId>
