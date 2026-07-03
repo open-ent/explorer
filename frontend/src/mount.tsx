@@ -40,14 +40,32 @@ function EmbeddableRoot({ embedded }: { embedded: boolean }) {
 
 const roots = new WeakMap<HTMLElement, Root>();
 
+/**
+ * En mode embarqué, le fond « décor » plein-cadre de la skin 1D est peint par
+ * bootstrap sur `<html data-product data-skin>` — attributs posés globalement par
+ * le ThemeProvider du module. Dans le dashboard hôte, ce décor bave sur toute la
+ * page : on le neutralise (l'hôte possède le fond). Idempotent.
+ */
+function injectEmbeddedReset(): void {
+  const id = 'openent-embed-reset';
+  if (typeof document === 'undefined' || document.getElementById(id)) return;
+  const style = document.createElement('style');
+  style.id = id;
+  style.textContent =
+    'html[data-product][data-skin]{background-image:none!important;background-color:transparent!important}';
+  document.head.appendChild(style);
+}
+
 export function mount(el: HTMLElement, ctx: MountContext = {}): void {
+  const embedded = ctx.embedded ?? true;
+  if (embedded) injectEmbeddedReset();
   const prev = roots.get(el);
   if (prev) prev.unmount();
   const root = createRoot(el);
   roots.set(el, root);
   root.render(
     <Providers>
-      <EmbeddableRoot embedded={ctx.embedded ?? true} />
+      <EmbeddableRoot embedded={embedded} />
     </Providers>,
   );
 }
