@@ -19,6 +19,9 @@ export default ({ mode }: { mode: string }) => {
 
   const isProduction = mode === 'production';
   const isLibMode = mode === 'lib';
+  // Mode « embed » : bundle micro-frontend AUTO-CONTENU (embarque son propre React 18)
+  // exposant mount/unmount pour l'intégration in-layout dans le dashboard (CCTP 51C-2).
+  const isEmbed = mode === 'embed';
 
   // Proxy variables
   const headers = hasEnvFile
@@ -104,6 +107,29 @@ export default ({ mode }: { mode: string }) => {
     },
   };
 
+  // Bundle « embed » : contrairement à buildLib, on N'EXTERNALISE RIEN (react,
+  // react-dom, deps sont embarqués) -> le module embarque sa propre copie de
+  // React 18, isolée du React 19 de l'hôte (dashboard). Sortie unique
+  // embed/explorer.js exposant mount()/unmount() pour le montage in-layout.
+  const buildEmbed: BuildOptions = {
+    outDir: 'embed',
+    emptyOutDir: true,
+    lib: {
+      entry: resolve(__dirname, 'src/mount.tsx'),
+      name: 'OpenEntExplorerEmbed',
+      formats: ['es'],
+      fileName: () => 'explorer.js',
+    },
+    rollupOptions: {
+      output: {
+        // Un seul fichier auto-contenu : pas de chunks externes à résoudre côté hôte.
+        inlineDynamicImports: true,
+        entryFileNames: `explorer.js`,
+        assetFileNames: `[name].[ext]`,
+      },
+    },
+  };
+
   const reactPlugin = react(
     isLibMode
       ? {
@@ -145,8 +171,21 @@ export default ({ mode }: { mode: string }) => {
     // cette base, `vite build` génère des chemins racine (/index.js) -> 404 du
     // bundle une fois déployé. La base ne s'applique qu'au build app (prod) ;
     // le mode lib (micro-frontend) et le dev server gardent la racine.
-    base: isProduction ? '/explorer/public/' : '/',
-    build: isProduction ? build : buildLib,
+    // Le bundle embed est servi sous /explorer/public/embed/ (déployé à côté du
+    // build app) ; le mode lib et le dev server gardent la racine.
+    base: isProduction ? '/explorer/public/' : isEmbed ? '/explorer/public/embed/' : '/',
+    build: isProduction ? build : isEmbed ? buildEmbed : buildLib,
+    // Le bundle embed embarque React/deps : celles-ci lisent `process.env.NODE_ENV`
+    // au runtime. En mode lib, Vite ne le remplace pas -> `process is not defined`
+    // dans le navigateur. On le fige donc pour ce mode auto-contenu.
+    ...(isEmbed
+      ? {
+          define: {
+            'process.env.NODE_ENV': JSON.stringify('production'),
+            'process.env': '{}',
+          },
+        }
+      : {}),
     plugins,
     server,
     resolve: {
