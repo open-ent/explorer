@@ -51,18 +51,16 @@ export function useFolderModal({
         const parentId = selectedFolders[0]?.parentId;
         const folder = selectedFolders[0];
         const folderId = folder!.id;
-        await updatefolder.mutate({ folderId, parentId, name });
-        reset();
-        onSuccess?.();
+        await updatefolder.mutateAsync({ folderId, parentId, name });
       } else {
         const parentId = currentFolder?.id || FOLDER.DEFAULT;
-        await createFolder.mutate({ name, parentId });
-        reset();
-        onSuccess?.();
+        await createFolder.mutateAsync({ name, parentId });
       }
-    } catch (e) {
-      // TODO display an alert?
-      console.error(e);
+      reset();
+      onSuccess?.();
+    } catch {
+      // The mutation's onError already displays a toast; nothing left to do
+      // here besides keeping the form open with its current values.
     }
   };
 
