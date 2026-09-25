@@ -57,6 +57,15 @@ import {
 
 export * from './actions';
 
+// Rights failures (401/403) are served by entcore as a full HTML page, never
+// as a translatable key: guard against dumping that markup into a toast.
+const isHtmlPayload = (value: string) => /<[a-z][\s\S]*>/i.test(value);
+
+const toToastMessage = (error: string): string =>
+  isHtmlPayload(error)
+    ? t('explorer.error.default', 'Une erreur est survenue, veuillez réessayer.')
+    : t(error);
+
 /**
  * useSearchContext query
  * update state according to currentFolder ID
@@ -131,7 +140,7 @@ export const useTrash = () => {
     mutationFn: async () =>
       await trashAll({ searchParams, folderIds, resourceIds, useAssetIds }),
     onError(error) {
-      if (typeof error === 'string') toast.error(t(error));
+      if (typeof error === 'string') toast.error(toToastMessage(error));
     },
     onSuccess: async (data) => {
       await queryClient.cancelQueries({ queryKey });
@@ -230,7 +239,7 @@ export const useRestore = () => {
     mutationFn: async () =>
       await restoreAll({ searchParams, folderIds, resourceIds, useAssetIds }),
     onError(error) {
-      if (typeof error === 'string') toast.error(t(error));
+      if (typeof error === 'string') toast.error(toToastMessage(error));
     },
     onSuccess: async () => {
       await queryClient.cancelQueries({ queryKey });
@@ -304,7 +313,7 @@ export const useDelete = () => {
     mutationFn: async () =>
       await deleteAll({ searchParams, folderIds, resourceIds, useAssetIds }),
     onError(error) {
-      if (typeof error === 'string') toast.error(t(error));
+      if (typeof error === 'string') toast.error(toToastMessage(error));
     },
     onSuccess: async () => {
       await queryClient.cancelQueries({ queryKey });
@@ -437,7 +446,11 @@ export const useCopyResource = () => {
     onError: (error) => {
       toast.remove(TOAST_INFO_ID);
       if (typeof error === 'string') {
-        toast.error(`${t('duplicate.error')}: ${error}`);
+        toast.error(
+          isHtmlPayload(error)
+            ? toToastMessage(error)
+            : `${t('duplicate.error')}: ${error}`,
+        );
       }
     },
   });
@@ -478,7 +491,7 @@ export const useMoveItem = () => {
         useAssetIds,
       }),
     onError(error) {
-      if (typeof error === 'string') toast.error(t(error));
+      if (typeof error === 'string') toast.error(toToastMessage(error));
     },
     onSuccess: async (data, variables) => {
       const previousData = queryClient.getQueryData<ISearchResults>(queryKey);
@@ -569,7 +582,7 @@ export const useCreateFolder = () => {
       parentId: string;
     }) => await createFolder({ searchParams, name, parentId }),
     onError(error) {
-      if (typeof error === 'string') toast.error(t(error));
+      if (typeof error === 'string') toast.error(toToastMessage(error));
     },
     onSuccess: async (data, variables) => {
       await queryClient.cancelQueries({ queryKey });
@@ -641,7 +654,7 @@ export const useUpdatefolder = () => {
       parentId: string;
     }) => await updateFolder({ searchParams, folderId, parentId, name }),
     onError(error) {
-      if (typeof error === 'string') toast.error(t(error));
+      if (typeof error === 'string') toast.error(toToastMessage(error));
     },
     onSuccess: async (data, variables) => {
       await queryClient.cancelQueries({ queryKey });
@@ -875,7 +888,7 @@ export const useCreateResource = ({
     mutationFn: async (params: CreateParameters) =>
       await createResource({ searchParams, params }),
     onError(error) {
-      if (typeof error === 'string') toast.error(t(error));
+      if (typeof error === 'string') toast.error(toToastMessage(error));
     },
     onSuccess: async (data, variables) => {
       await queryClient.cancelQueries({ queryKey });
