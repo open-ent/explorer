@@ -16,7 +16,7 @@
 
     <properties>
         <entCoreVersion>6.16.14-patched</entCoreVersion>
-        <entCoreLibsVersion>6.16.7-patched</entCoreLibsVersion>
+        <entCoreLibsVersion>6.16.8-patched</entCoreLibsVersion>
         <web-utils.version>3.3.1</web-utils.version>
         <vertxCronTimerVersion>3.0.0</vertxCronTimerVersion>
 	<modPostgresVersion>2.1.1</modPostgresVersion>
