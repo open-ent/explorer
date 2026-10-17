@@ -21,7 +21,7 @@
         <vertxCronTimerVersion>3.0.0</vertxCronTimerVersion>
 	<modPostgresVersion>2.1.1</modPostgresVersion>
 	<scramVersion>2.1</scramVersion>
-        <jsoupVersion>1.15.4</jsoupVersion>
+        <jsoupVersion>1.23.2</jsoupVersion>
         <junitVersion>4.13.2</junitVersion>
 		<sonar.organization>edificeio</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
