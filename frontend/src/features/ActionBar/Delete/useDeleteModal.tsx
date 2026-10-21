@@ -15,9 +15,9 @@ export function useDeleteModal({ onSuccess }: ModalProps) {
   async function onDelete() {
     try {
       if (isTrashFolder) {
-        await deleteItem.mutate();
+        await deleteItem.mutateAsync();
       } else {
-        await trashItem.mutate();
+        await trashItem.mutateAsync();
       }
       onSuccess?.();
     } catch (e) {

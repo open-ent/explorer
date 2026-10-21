@@ -37,7 +37,7 @@ export function useMoveModal({ onSuccess }: ModalProps) {
     try {
       if (!selectedFolder) throw new Error('explorer.move.selection.empty');
 
-      await moveItem.mutate(selectedFolder);
+      await moveItem.mutateAsync(selectedFolder);
       await onSuccess?.();
     } catch (e) {
       // TODO display an alert?

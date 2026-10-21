@@ -85,7 +85,7 @@ export default function useDndKit() {
 
       if (over) {
         try {
-          await moveItem.mutate(elementOver?.id);
+          await moveItem.mutateAsync(elementOver?.id);
           notifySuccess(active, folderName);
         } catch (e) {
           console.error(e);

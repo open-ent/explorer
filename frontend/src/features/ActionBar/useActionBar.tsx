@@ -158,7 +158,7 @@ export default function useActionBar() {
   async function onRestore() {
     try {
       if (isTrashFolder) {
-        await restoreItem.mutate();
+        await restoreItem.mutateAsync();
       } else {
         throw new Error('Cannot restore untrashed resources');
       }
@@ -207,9 +207,15 @@ export default function useActionBar() {
   async function onCopy() {
     if (selectedResources && selectedResources.length > 0) {
       const selectedResource = selectedResources[0];
-      await copyResource.mutate(selectedResource);
-      clearSelectedItems();
-      clearSelectedIds();
+      try {
+        // mutateAsync : `mutate` ne renvoie pas de promesse, la sélection était vidée
+        // avant la fin (ou malgré l'échec) de la copie
+        await copyResource.mutateAsync(selectedResource);
+        clearSelectedItems();
+        clearSelectedIds();
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
 
