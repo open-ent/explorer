@@ -11,7 +11,7 @@ on:
       - '*-patched-dev'
     tags: ['*', '!lib-v*'] # lib-v* réservé à publish-lib.yml (lib npm), pas au fat mod
   pull_request:
-    branches: [main, master, develop, dev]
+    branches: [main, master, develop, dev, '*-patched-dev', '*-patched']
   workflow_dispatch:
     inputs:
       entcore_version:
