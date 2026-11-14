@@ -55,7 +55,7 @@
     "clsx": "2.1.1",
     "dayjs": "1.11.10",
     "i18next": "23.8.1",
-    "i18next-http-backend": "2.4.2",
+    "i18next-http-backend": "4.0.4",
     "react-error-boundary": "4.0.13",
     "react-hook-form": "7.53.0",
     "react-router-dom": "6.23.1",
