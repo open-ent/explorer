@@ -58,7 +58,7 @@
     "i18next-http-backend": "2.4.2",
     "react-error-boundary": "4.0.13",
     "react-hook-form": "7.53.0",
-    "react-router-dom": "6.23.1",
+    "react-router-dom": "6.30.6",
     "zustand": "4.5.0",
     "@open-ent/react": "2.5.30-patched",
     "@open-ent/bootstrap": "2.5.30-patched",
